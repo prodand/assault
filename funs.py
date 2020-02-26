@@ -5,7 +5,7 @@ ACTION_SIZE = 7
 
 
 def build_input(frames):
-    return np.array([frames[0], frames[1], frames[2]]).reshape((1, INPUT_SIZE))
+    return np.array([frames[0], frames[1], frames[2]]).reshape((1, INPUT_SIZE)) / 255
 
 
 def prepare_input(frame_seqs):
