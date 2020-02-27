@@ -10,19 +10,19 @@ env = gym.make("Assault-ram-v0").env
 
 network = McNetwork(INPUT_SIZE)
 
-MAX_ABS_REWARD = 42
+MAX_ABS_REWARD = 21
 
 
 def evaluate(steps, reward, done, lives_diff):
-    if reward > 0:
-        return reward, True, False
     if done:
         return -21.0, True, True
     if lives_diff < 0:
         return -42.0, True, False
+    if reward > 0:
+        return reward, True, False
     if steps == 25:
-        return -0.8, True, False
-    return reward if reward != 0.0 else -0.8, False, False
+        return -0.5, True, False
+    return reward if reward != 0.0 else -0.5, False, False
 
 
 if __name__ == '__main__':
