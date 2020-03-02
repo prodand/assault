@@ -1,17 +1,17 @@
 import numpy as np
 
-INPUT_SIZE = 128 * 3
-ACTION_SIZE = 7
+INPUT_SIZE = 128
+ACTION_SIZE = 5
 
 
 def build_input(frames):
-    return np.array([frames[0], frames[1], frames[2]]).reshape((1, INPUT_SIZE)) / 255
+    return np.array([frames[0]]).reshape((1, INPUT_SIZE)) / 255
 
 
-def prepare_input(frame_seqs):
-    result = frame_seqs[0].reshape(INPUT_SIZE, 1)
-    for i in range(1, len(frame_seqs)):
-        result = np.column_stack((result, frame_seqs[i].reshape(INPUT_SIZE, 1)))
+def prepare_input(states):
+    result = states[0].reshape(INPUT_SIZE, 1)
+    for i in range(1, len(states)):
+        result = np.column_stack((result, states[i].reshape(INPUT_SIZE, 1)))
     return result.T
 
 
