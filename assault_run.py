@@ -10,9 +10,9 @@ env = gym.make("Assault-ram-v0").env
 
 network = McNetwork(INPUT_SIZE)
 
-MAX_ABS_REWARD = 100
-STEP_REWARD = -0.09
-LIVE_LOSE_OR_DONE = -100.0
+MAX_ABS_REWARD = 200
+STEP_REWARD = -0.5
+LIVE_LOSE_OR_DONE = -200.0
 
 
 def evaluate(steps, reward, done, lives_diff):
@@ -21,8 +21,8 @@ def evaluate(steps, reward, done, lives_diff):
     if lives_diff < 0:
         return LIVE_LOSE_OR_DONE, True, False
     if reward > 0:
-        return reward, True, False
-    if steps >= 80:
+        return reward, False, False
+    if steps >= 210:
         return STEP_REWARD, True, False
     return reward if reward != 0.0 else STEP_REWARD, False, False
 
@@ -35,6 +35,7 @@ if __name__ == '__main__':
     results = list()
     score = 0
     average = 0
+    maxScore = 0
     while True:
         states = list()
         action_rewards = list()
@@ -56,7 +57,7 @@ if __name__ == '__main__':
             action_rewards.append((action, my_reward / MAX_ABS_REWARD))
 
             print(epoch, reward, my_reward, predictions[action], action)
-            print('Average: %.3f' % average)
+            print('Average: %.3f, Max: %.1f' % (average, maxScore))
             env.render()
             if epoch % 50 == 0:
                 time.sleep(0.004)
@@ -73,5 +74,6 @@ if __name__ == '__main__':
             score = 0
             results = results[-500:] if len(results) > 500 else results
             average = np.average(results)
+            maxScore = np.max(results)
 
         network.train(prepare_input(states), prepare_action_rewards(action_rewards))

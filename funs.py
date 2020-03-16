@@ -1,7 +1,7 @@
 import numpy as np
 
 INPUT_SIZE = 128
-ACTION_SIZE = 5
+ACTION_SIZE = 7
 
 
 def build_input(frames):
